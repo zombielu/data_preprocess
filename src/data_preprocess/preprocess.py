@@ -15,8 +15,6 @@ import pyarrow.parquet as pq
 # pd.set_option('display.max_columns', None)
 NY = pytz.timezone("America/New_York")
 UTC = pytz.UTC
-import pyarrow as pa
-
 TRADE_SCHEMA_V1 = pa.schema([
     ("ts_recv", pa.string()),
     ("ts_event", pa.string()),
@@ -206,9 +204,11 @@ def get_related_trade_records(
 
     Args:
         reference_file_path: path of the reference file
-        input_folder_path: path of the input folder or raw data folder
+        input_folder_path: path of the input folder or raw data folder which
+        contains csv files downloaded from website.
         output_folder_path: path of the output folder where you want to
-        receive all the generated trade_records files
+        receive all the generated trade_records files (this folder is also called
+        raw_silver)
 
     Returns: None
 
@@ -220,6 +220,7 @@ def get_related_trade_records(
 
     reference_df = pd.read_csv(reference_file_path, parse_dates=['time'])
     reference_df['time'] = reference_df['time'].apply(parse_to_ny_datetime)
+
     # i = 0
     # reference_contracts = {}
     # problem_days = {}
@@ -403,7 +404,7 @@ if __name__ == "__main__":
     reference_file_path = '/Users/weilinwu/Downloads/ES_day_bar_20251001.csv'
     input_folder_path = '/Users/weilinwu/Documents/data/raw_csv'
     output_folder_path = '/Users/weilinwu/Downloads/output_folder'
-    # output_folder_path = '/Users/weilinwu/Downloads'
+
 
     get_related_trade_records(
         reference_file_path,
