@@ -51,7 +51,7 @@ Generate aggregated OHLCV (Open, High, Low, Close, Volume) bars at configurable 
 
 ## Usage
 
-### Stage 1: Timestamp Normalization
+### Stage 1: Timestamp Normalization(not necessary)
 - input:
   - source_folder: folder contains raw csv files downloaded from website.
   - sample input file:
@@ -59,9 +59,9 @@ Generate aggregated OHLCV (Open, High, Low, Close, Volume) bars at configurable 
   - note: some of the csv files have symbol column, some don't.
   
 
-### Stage 2: Trade Record Extraction and Consolidation
+### Stage 2: Trade Record Extraction and Consolidation(preprocess.py)
 
-call the function: get_related_trade_records
+call the function: get_related_trade_records() in preprocess.py
 - input 
   - reference_file_path: reference file is where we distinguish the relevant record.
   - input_folder_path: raw data folder:raw data file are the csv files we get from step 1.
@@ -69,7 +69,7 @@ call the function: get_related_trade_records
   - sample reference file:
     ![img_1.png](docs/images/img_1.png)
  
-- output files are the parquet files with all the relevant records and separated by date(raw_silver).
+- output files are the parquet files with all the relevant records and separated by date(this is called raw_silver).
 
 ---
 ### Stage 3: OHLCV Aggregation (generate_bars.py)
